@@ -10,8 +10,8 @@ class RajaOngkirService
 {
     public function fetchProvinces()
     {
-        $response = Http::get(env('RAJAONGKIR_API_URL') . '/province', [
-            'key' => env('RAJAONGKIR_API_KEY'),
+        $response = Http::get(config('rajaongkir.url') . '/province', [
+            'key' => config('rajaongkir.key'),
         ]);
 
         if ($response->successful()) {
@@ -33,8 +33,8 @@ class RajaOngkirService
 
     public function fetchCities()
     {
-        $response = Http::get(env('RAJAONGKIR_API_URL') . '/city', [
-            'key' => env('RAJAONGKIR_API_KEY'),
+        $response = Http::get(config('rajaongkir.url') . '/city', [
+            'key' => config('rajaongkir.key'),
         ]);
 
         if ($response->successful()) {

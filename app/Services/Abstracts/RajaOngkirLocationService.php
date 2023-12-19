@@ -11,13 +11,13 @@ abstract class RajaOngkirLocationService implements LocationServiceInterface
 
     protected function getUrl(): string
     {
-        return env('RAJAONGKIR_API_URL') . '/' . $this->getPath();
+        return config('rajaongkir.url') . '/' . $this->getPath();
     }
 
     public function getAll()
     {
         $response = Http::get($this->getUrl(), [
-            'key' => env('RAJAONGKIR_API_KEY'),
+            'key' => config('rajaongkir.key'),
         ]);
 
         return $this->returnData($response, []);
@@ -27,7 +27,7 @@ abstract class RajaOngkirLocationService implements LocationServiceInterface
     {
         $response = Http::get($this->getUrl(), [
             'id' => $id,
-            'key' => env('RAJAONGKIR_API_KEY'),
+            'key' => config('rajaongkir.key'),
         ]);
 
         return $this->returnData($response, null);

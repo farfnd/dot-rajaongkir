@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\Abstracts;
 
 use App\Http\Controllers\Controller;
 use App\Http\Responses\ApiResponseTrait;
-use App\Contracts\LocationServiceInterface;
 use App\Services\Abstracts\DatabaseLocationService;
 use App\Services\Abstracts\RajaOngkirLocationService;
 use Illuminate\Http\Request;
@@ -17,7 +16,7 @@ abstract class LocationController extends Controller
 
     public function __construct(DatabaseLocationService $dbService, RajaOngkirLocationService $rajaOngkirService)
     {
-        if (env('USE_RAJAONGKIR_API') == 'true') {
+        if (config('rajaongkir.enabled') == true) {
             $this->locationService = $rajaOngkirService;
         } else {
             $this->locationService = $dbService;
