@@ -3,84 +3,55 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Responses\ApiResponseTrait;
 use App\Models\Province;
 use Illuminate\Http\Request;
 
 class ProvinceController extends Controller
 {
+    use ApiResponseTrait;
+
+    /**
+     * Retrieve province(s) data
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search(Request $request)
+    {
+        $provinceId = $request->query('id');
+
+        if ($provinceId) {
+            return $this->show($provinceId);
+        }
+        return $this->index();
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        //
-    }
+        $provinces = Province::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return $this->sendSuccess($provinces, 'All provinces fetched');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Province  $province
-     * @return \Illuminate\Http\Response
+     * @param $provinceId
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Province $province)
+    public function show($provinceId)
     {
-        //
-    }
+        $province = Province::find($provinceId);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Province  $province
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Province $province)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Province  $province
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Province $province)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Province  $province
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Province $province)
-    {
-        //
+        if ($province) {
+            return $this->sendSuccess($province, 'Province found');
+        } else {
+            return $this->sendNotFound('Province not found');
+        }
     }
 }
