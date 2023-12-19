@@ -14,7 +14,7 @@ class ProvinceFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'province' => $this->faker->state,
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Province;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CityFactory extends Factory
@@ -13,8 +14,13 @@ class CityFactory extends Factory
      */
     public function definition()
     {
+        $province = Province::inRandomOrder()->first();
         return [
-            //
+            'province_id' => $province->province_id,
+            'province' => $province->province,
+            'city_name' => $this->faker->city,
+            'type' => $this->faker->randomElement(['Kabupaten', 'Kota']),
+            'postal_code' => $this->faker->postcode,
         ];
     }
 }
